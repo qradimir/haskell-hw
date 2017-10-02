@@ -1,7 +1,12 @@
-module Task.Monoids where
+module Task.Monoids ( maybeConcat
+                    , eitherConcat
+                    , NonEmpty (..)
+                    , Identity (..)
+                    , Name (..)
+                    , Arrow (..)
+                    ) where
 
 import Data.Semigroup
-
 
 maybeConcat :: (Monoid a) => [Maybe a] -> a
 maybeConcat = foldr helper mempty
@@ -42,7 +47,6 @@ instance Semigroup Name where
 instance Monoid Name where
  mempty = Name ""
  l `mappend` r  = l <> r
-
 
 newtype Arrow a b = Arrow { getArrow :: a -> b }
 

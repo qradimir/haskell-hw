@@ -1,4 +1,6 @@
-module Task.Split where
+module Task.Split ( splitOn
+                  , joinWith
+                  ) where
 
 splitOn :: Char -> String -> [String]
 splitOn splitter = foldr helper [""]
@@ -8,7 +10,8 @@ splitOn splitter = foldr helper [""]
                     | otherwise     = (c:r):rs
 
 joinWith :: Char -> [String] -> String
-joinWith joiner = foldr helper ""
+joinWith _      [] = ""
+joinWith joiner xs = foldr1 helper xs
   where
     helper :: String -> String -> String
-    helper str acc = acc ++ [joiner] ++ str
+    helper str acc = str ++ joiner:acc

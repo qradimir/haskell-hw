@@ -1,4 +1,9 @@
-module Task.Lists where
+module Task.Lists ( removeAt
+                  , collectEvery
+                  , stringSum
+                  , mergeSort
+                  ) where
+
 
 removeAt :: Int -> [a] -> (Maybe a, [a])
 removeAt _ []                 = (Nothing, [])
@@ -11,15 +16,20 @@ collectEvery n xs | n > 1     = collectEveryAcc (n - 1) (n - 1) xs
                   | n == 1    = ([], xs)
                   | otherwise = (xs, [])
   where
-    collectEveryAcc acc n []     = ([], [])
-    collectEveryAcc 0   n (x:xs) = let (ls, rs) = collectEveryAcc n         n xs in (ls, x:rs)
-    collectEveryAcc acc n (x:xs) = let (ls, rs) = collectEveryAcc (acc - 1) n xs in (x:ls, rs)
+    collectEveryAcc _   _ []     = ([], [])
+    collectEveryAcc 0   m (x:xs') = let (ls, rs) = collectEveryAcc m         m xs' in (ls, x:rs)
+    collectEveryAcc acc m (x:xs') = let (ls, rs) = collectEveryAcc (acc - 1) m xs' in (x:ls, rs)
 
 stringSum :: String -> Int
-stringSum = sum . map read . words
+stringSum = sum . map read' . words
+  where
+    read' ('+':xs) = read xs
+    read' xs       = read xs
 
 mergeSort :: Ord a => [a] -> [a]
-mergeSort x =  let (l, r) = collectEvery 2 x in merge (mergeSort l) (mergeSort r)
+mergeSort []  =  []
+mergeSort [x] =  [x]
+mergeSort xs  =  let (l, r) = collectEvery 2 xs in merge (mergeSort l) (mergeSort r)
   where
     merge :: Ord a => [a] -> [a] -> [a]
     merge []     r      = r

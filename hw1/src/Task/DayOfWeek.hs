@@ -1,4 +1,14 @@
-module Task.DayOfWeek where
+module Task.DayOfWeek
+       ( DayOfWeek (..)
+       , daysInWeek
+       , dayNumber
+       , toDay
+       , isWeekend
+       , afterDays
+       , nextDay
+       , daysToParty
+       ) where
+
 
 data DayOfWeek = Mon | Tue | Wed | Thu | Fri | Sat | Sun
   deriving (Eq, Ord, Show, Read, Bounded, Enum)

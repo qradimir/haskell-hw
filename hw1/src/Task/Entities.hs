@@ -1,11 +1,17 @@
-module Task.Entities where
+module Task.Entities ( Health (..)
+                     , Armor (..)
+                     , Braveness (..)
+                     , Beast (..)
+                     , Knight (..)
+                     , Entity (..)
+                     , FightResult (..)
+                     , damage
+                     , fight
+                     ) where
 
 newtype Health    = Health Int
 newtype Armor     = Armor Int
 newtype Braveness = Braveness Int
-
-dead :: Health
-dead = Health 0
 
 data Beast = Beast Health Armor
 

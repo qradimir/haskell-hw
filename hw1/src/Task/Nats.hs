@@ -1,6 +1,11 @@
-module Task.Nats where
+module Task.Nats ( Nat
+                 , even
+                 , div
+                 , mod
+                 , gcd
+                 ) where
 
-import Prelude hiding (even, mod, gcd)
+import Prelude hiding (even, mod, gcd, div)
 
 data Nat = Z | S Nat
 

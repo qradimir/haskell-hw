@@ -5,8 +5,8 @@ order3 (x, y, z) | (x <= y) && (x <= z) = orderLast x y z
                  | (y <= x) && (y <= z) = orderLast y x z
                  | otherwise            = orderLast z x y
   where
-    orderLast min x y | x <= y    = (min, x, y)
-                      | otherwise = (min, y, x)
+    orderLast minval x' y' | x' <= y'  = (minval, x', y')
+                           | otherwise = (minval, y', x')
 
 highestBit :: Int -> (Int, Int)
 highestBit x | x > 1     = highestBitHelp (1, 0)

@@ -4,11 +4,40 @@ author:              Radimir Sorokin
 
 category:            Web
 build-type:          Simple
+extra-source-file:   README.md
 cabal-version:       >=1.10
 tested-with:         GHC == 8.0.1
 
 library
-  hs-source-dirs:      src
-  ghc-options:         -Wall
-  build-depends:       base >= 4.9 && < 5
-  default-language:    Haskell2010
+  hs-source-dirs:   src
+  exposed-modules:  Task.DayOfWeek
+                  , Task.Entities
+                  , Task.Lists
+                  , Task.Monoids
+                  , Task.Nats
+                  , Task.Primitives
+                  , Task.Split
+                  , Task.Trees
+                  , Task.Vector
+  ghc-options:      -Wall
+  build-depends:    base >= 4.9 && < 5
+  default-language: Haskell2010
+
+test-suite hw1-test
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test_src
+  main-is:          Spec.hs
+  other-modules:    DayOfWeekSpec
+--                  , EntitiesSpec
+                  , ListsSpec
+--                  , MonoidsSpec
+--                  , NatsSpec
+                  , PrimitivesSpec
+                  , SplitSpec
+--                  , TreesSpec
+--                  , VectorSpec
+  build-depends:    base
+                  , hw1
+                  , hspec
+  ghc-options:      -Wall -threaded -rtsopts -with-rtsopts=-N
+  default-language: Haskell2010
