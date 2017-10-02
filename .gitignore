@@ -1,0 +1,7 @@
+.stack-work/
+cabal.config
+**/*.iml
+.idea/
+Setup.hs
+app/
+haskell-hw.cabal
