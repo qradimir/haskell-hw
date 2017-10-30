@@ -16,4 +16,4 @@ instance Foldable (Pair a) where
   foldMap f (Pair _ b) = f b
 
 instance Traversable (Pair a) where
-  traverse f (Pair a b) = pure (Pair a) <*> f b 
+  traverse f (Pair a b) = pure (Pair a) <*> f b

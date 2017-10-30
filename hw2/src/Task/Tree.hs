@@ -16,10 +16,10 @@ instance Applicative Tree where
   _              <*> _              = Leaf
 
 instance Foldable Tree where
-  foldMap _ Leaf = mempty
+  foldMap _ Leaf         = mempty
   foldMap f (Node x l r) = foldMap f l `mappend` f x `mappend` foldMap f r
 
-  foldr _ z Leaf = z
+  foldr _ z Leaf         = z
   foldr f z (Node x l r) = foldr f (f x (foldr f z r)) l
 
 instance Traversable Tree where

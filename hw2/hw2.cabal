@@ -9,9 +9,11 @@ tested-with:         GHC == 8.0.1
 
 library
   hs-source-dirs:   src
-  exposed-modules:  Task.Either
+  exposed-modules:  Task.Const
+                  , Task.Either
                   , Task.Expressions
                   , Task.Identity
+                  , Task.List
                   , Task.MathParser
                   , Task.Monad
                   , Task.MonadFish
@@ -20,20 +22,22 @@ library
                   , Task.Parser
                   , Task.Partials
                   , Task.Tree
-  ghc-options:      -Wall -Worp
+  ghc-options:      -Wall -fno-warn-orphans
   build-depends:    base
                   , containers
-                  , hw1
   default-language: Haskell2010
 
 test-suite hw2-test
   type:             exitcode-stdio-1.0
   hs-source-dirs:   test_src
   main-is:          Spec.hs
-  other-modules:
+  other-modules:    ExpressionsSpec
+                  , ListSpec
+                  , ParserSpec
+                  , MathParserSpec
   build-depends:    base
                   , containers
-                  , hw1
+                  , hw2
                   , hspec
-  ghc-options:      -Wall -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:      -Wall -threaded -rtsopts -with-rtsopts=-N -fno-warn-type-defaults
   default-language: Haskell2010

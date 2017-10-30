@@ -1,11 +1,11 @@
 module Task.MathParser where
 
-import           Task.Parser
-import           Data.List (intercalate)
-import           Data.Maybe
-import           Data.Char
 import           Control.Applicative ((<|>))
-import qualified Data.Map.Lazy as M
+import           Data.Char
+import           Data.List           (intercalate)
+import qualified Data.Map.Lazy       as M
+import           Data.Maybe
+import           Task.Parser
 
 newtype Name = Name String
   deriving (Eq,  Ord)
@@ -14,7 +14,10 @@ instance Show Name where
   show (Name s) = s
 
 data Term = Const Int | Ref Name
+  deriving (Eq)
+
 data Expr = Expr Name [Term]
+  deriving (Eq)
 
 instance Show Term where
   show (Const i) = show i
@@ -75,8 +78,6 @@ exprParser = many space >>
                    same '+' >>
                    many space >>
                    termParser) >>= \restTerms ->
-             many space >>
-             same '\n' >>
              pass (Expr name (fstTerm:restTerms))
 
 programParser :: Parser [Expr]

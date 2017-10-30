@@ -4,7 +4,7 @@ import            Control.Monad ((>=>))
 import            Control.Applicative hiding (many)
 
 data ParseError = EOF | Rejected
-  deriving (Show)
+  deriving (Show, Eq)
 
 combineErrors :: ParseError -> ParseError -> ParseError
 combineErrors Rejected Rejected = Rejected
@@ -45,15 +45,6 @@ like p = Monstupar f
 
 same :: Eq s => s -> Monstupar s s
 same x = like $ (==) x
-
-
-nonEmptySpan :: (s -> Bool) -> Monstupar s [s]
-nonEmptySpan p = Monstupar f
-  where
-    f xs
-      | null ns   = Left Rejected
-      | otherwise = Right (ns, rest)
-     where (ns, rest) = span p xs
 
 instance Functor (Monstupar s) where
   fmap f (Monstupar p) = Monstupar (p >=> (pure . fmap f))

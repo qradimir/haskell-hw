@@ -1,4 +1,3 @@
-
 module Task.List
      ( bin
      , combinations
@@ -19,7 +18,7 @@ combinations n k = fmap reverse (combinations' k)
     combinations' k' = combinations' (k'-1) >>= \x -> fmap (:x) [maxIn x + 1..n]
 
     maxIn :: [Int] -> Int
-    maxIn [] = 0
+    maxIn []    = 0
     maxIn (x:_) = x
 
 

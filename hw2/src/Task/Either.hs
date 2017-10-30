@@ -2,12 +2,12 @@ module Task.Either
     ( Either (..)
     ) where
 
-import Prelude hiding (Either (..))
+import           Prelude hiding (Either (..))
 
 data Either a b = Left a | Right b
 
 instance Functor (Either a) where
-  fmap _ (Left x) = Left x
+  fmap _ (Left x)  = Left x
   fmap f (Right x) = Right $ f x
 
 instance Applicative (Either a) where

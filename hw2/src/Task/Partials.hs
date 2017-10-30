@@ -10,11 +10,11 @@ module Task.Partials
        , orElse
        ) where
 
-import           Data.Maybe (isJust, fromMaybe)
 import           Control.Applicative ((<|>))
-import           Control.Category (Category, id, (.))
-import           Control.Monad ((>=>))
-import           Prelude hiding (id, (.))
+import           Control.Category    (Category, id, (.))
+import           Control.Monad       ((>=>))
+import           Data.Maybe          (fromMaybe, isJust)
+import           Prelude             hiding (id, (.))
 
 data a ~> b
     = Partial   (a -> Maybe b) -- a partial function
