@@ -7,6 +7,12 @@ import qualified Data.Map.Lazy       as M
 import           Data.Maybe
 import           Task.Parser
 
+abParser :: Parser (Char, Char)
+abParser = (,) <$> same 'a' <*> same 'b'
+
+abParser_ :: Parser ()
+abParser_ = abParser *> ok
+
 newtype Name = Name String
   deriving (Eq,  Ord)
 
@@ -15,6 +21,28 @@ instance Show Name where
 
 data Term = Const Int | Ref Name
   deriving (Eq)
+
+
+intParser :: Parser Int
+intParser = read <$> many1 (like isDigit)
+
+nameParser :: Parser Name
+nameParser = Name <$> ((:) <$> like isLetter <*> many (like isLetter <|> like isDigit))
+
+space :: Parser Char
+space = same ' ' <|> same '\t'
+
+termParser :: Parser Term
+termParser = Const <$> intParser <|> Ref <$> nameParser
+
+
+data SExpr = Atom Term | Comb [SExpr]
+  deriving (Show, Eq)
+
+sExprParser :: Parser SExpr
+sExprParser = many space *> (atomParser <|> combParser) <* many space where
+  atomParser = Atom <$> termParser
+  combParser = Comb <$> (same '(' *> many sExprParser <* same ')')
 
 data Expr = Expr Name [Term]
   deriving (Eq)
@@ -53,18 +81,6 @@ fold = fold' M.empty
    inlineTerm _    t@(Const _) = [t]
    inlineTerm dict t@(Ref n)   = fromMaybe [t] (M.lookup n dict)
 
-intParser :: Parser Int
-intParser = read <$> many1 (like isDigit)
-
-nameParser :: Parser Name
-nameParser = Name <$> many1 (like isLetter)
-
-space :: Parser Char
-space = same ' ' <|> same '\t'
-
-termParser :: Parser Term
-termParser = Const <$> intParser <|> Ref <$> nameParser
-
 exprParser :: Parser Expr
 exprParser = many space >>
              match "let" >>
@@ -81,7 +97,7 @@ exprParser = many space >>
              pass (Expr name (fstTerm:restTerms))
 
 programParser :: Parser [Expr]
-programParser = many exprParser >>= \exprs -> eof >> pass exprs
+programParser = exprParser >>= \expr -> many (many space >> same '\n' >> exprParser) >>= \exprs -> pass (expr:exprs)
 
 instance Read Expr where
   readsPrec _ s = case runParser exprParser s of
@@ -90,5 +106,5 @@ instance Read Expr where
 
 programReader :: IO ()
 programReader = interact (\s -> case runParser programParser s of
-  Right (_, exprs) -> unlines . map show $ exprs
+  Right (_, exprs) -> unlines . map show . fold $ exprs
   Left e           -> "Parse error: " ++ show e)
