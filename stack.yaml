@@ -1,9 +1,13 @@
-resolver: lts-9.4
+resolver: lts-9.13
 
 packages:
 - hw1
+- hw2
+- hw3
+- extra-hw
 
-extra-deps: []
+extra-deps:
+  - megaparsec-6.2.0
 
 flags: {}
 
