@@ -1,0 +1,32 @@
+name:                hw4
+version:             0.1
+author:              Radimir Sorokin
+
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+tested-with:         GHC == 8.0.1
+
+library
+  hs-source-dirs:   src
+  exposed-modules:  FS
+                  , Iso
+                  , Lens
+                  , TH
+                  , THSamples
+                  , Renew
+                  , Builder
+                  , Tree
+  ghc-options:      -Wall
+  build-depends:    base
+                  , mtl
+                  , containers
+                  , template-haskell
+                  , profunctors
+                  , tagged
+                  , lens
+                  , directory
+                  , filepath
+                  , text
+                  , comonad
+  default-language: Haskell2010
